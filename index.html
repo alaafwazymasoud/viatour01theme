@@ -3,47 +3,226 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ViaTour Theme</title>
-    <link rel="stylesheet" href="dist/styles.css">
-</head>
-<body class="bg-gray-100">
-    <div class="container mx-auto px-4 py-8">
-        <header class="text-center mb-8">
-            <h1 class="text-4xl font-bold text-blue-600 mb-2">ViaTour Theme</h1>
-            <p class="text-gray-600">Built with Tailwind CSS v4</p>
-        </header>
+    <title>ViaTours - Travel & Tour Booking</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap" rel="stylesheet">
+
+    <!-- Tailwind CSS v4 CDN -->
+    <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
+
+    <style type="text/tailwindcss">
+        @theme {
+            --font-sans: "DM Sans", sans-serif;
+
+            --color-accent-1: #EB662B;
+            --color-accent-2: #4A43C4;
+            --color-dark-1: #05073C;
+            --color-light-1: #F5F5F5;
+            --color-light-2: #E7E6E6;
+            --color-text-light: #717171;
+            --color-yellow-1: #E2AD64;
+
+            --shadow-card: 0px 10px 40px 0px rgba(0, 0, 0, 0.05);
+            --shadow-float: 0px 20px 50px 0px rgba(0, 0, 0, 0.1);
+        }
+
+        @layer utilities {
+            .text-outline-stroke {
+                -webkit-text-stroke: 1px rgba(255,255,255,0.3);
+                color: transparent;
+            }
+            .no-scrollbar::-webkit-scrollbar {
+                display: none;
+            }
+            .no-scrollbar {
+                -ms-overflow-style: none;
+                scrollbar-width: none;
+            }
+        }
+    </style>
+    <style>
+        .header-sticky {
+            background-color: white !important;
+            box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1) !important;
+            animation: slideDown 0.3s ease-out forwards;
+        }
+
+        .header-sticky nav {
+            color: #05073C !important;
+        }
+
+        .header-sticky .header-right-text {
+            color: #05073C !important;
+        }
+
+        .header-sticky .header-btn-outline {
+            border-color: #05073C !important;
+            color: #05073C !important;
+        }
         
-        <main>
-            <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
-                <h2 class="text-2xl font-semibold mb-4 text-gray-800">Welcome to ViaTour</h2>
-                <p class="text-gray-600 mb-4">
-                    This is a sample theme built with Tailwind CSS v4. 
-                    The modern utility-first CSS framework that helps you build beautiful designs quickly.
-                </p>
-                <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-                    Get Started
+        .header-sticky .header-btn-outline:hover {
+            background-color: #05073C !important;
+            color: white !important;
+        }
+
+        @keyframes slideDown {
+            from { transform: translateY(-100%); }
+            to { transform: translateY(0); }
+        }
+    </style>
+</head>
+<body class="font-sans text-[#05073C] antialiased">
+
+    <!-- Preloader -->
+    <div id="preloader" class="fixed inset-0 z-[9999] bg-white flex flex-col justify-center items-center transition-opacity duration-500">
+        <div class="w-16 h-16 relative flex justify-center items-center animate-bounce">
+            <svg width="41" height="31" viewBox="0 0 41 31" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M39.9246 6.45422C38.6506 6.53101 37.3919 6.77205 36.1796 7.17136C34.9471 7.51728 33.7473 7.97054 32.594 8.52594C31.4296 9.02494 30.3322 9.66736 29.327 10.4383C28.3008 11.1471 27.3408 11.9472 26.4585 12.8287C25.5696 13.7546 24.7443 14.7396 23.9884 15.7769C23.2751 16.8197 22.6361 17.9114 22.076 19.0439C21.5552 20.2118 21.1029 21.409 20.7215 22.6295C20.4058 23.862 20.1663 25.1127 20.0043 26.3745C19.9199 25.1015 19.6791 23.8437 19.2872 22.6295C18.9413 21.397 18.488 20.1972 17.9326 19.0439C17.4336 17.8795 16.7912 16.7821 16.0203 15.7769C15.2919 14.7406 14.4932 13.7555 13.6298 12.8287C12.703 11.9653 11.7179 11.1666 10.6816 10.4383C9.67646 9.66736 8.579 9.02494 7.41468 8.52594C6.27257 7.9447 5.07016 7.49046 3.82902 7.17136C2.61677 6.77205 1.35801 6.53101 0.0840036 6.45422C0.0840036 7.17136 0.0043223 7.88849 0.0043223 8.60562C-0.0264515 10.0767 0.107179 11.5467 0.402729 12.9881C0.551182 13.7144 0.737357 14.4325 0.960498 15.1395C1.12782 15.8528 1.36813 16.5471 1.67763 17.2112C1.93625 17.8895 2.22878 18.5543 2.55412 19.2032L3.66966 21.1156L5.02424 22.8686L6.45851 24.4622L8.05213 25.9761L9.80512 27.251C10.4426 27.7291 11.08 28.0478 11.7175 28.4463L13.7095 29.4024L15.7015 30.1196L17.8529 30.6773L20.0043 30.9961L22.1557 30.6773L24.3071 30.1196L26.3788 29.4024L28.3709 28.4463L30.2035 27.251L31.9565 25.9761C32.5257 25.513 33.0584 25.0069 33.5501 24.4622C34.0948 23.9705 34.6009 23.4377 35.0641 22.8686L36.339 21.1156C36.7374 20.4781 37.1358 19.8407 37.4545 19.2032L38.4107 17.2112L39.1278 15.1395C39.3251 14.4313 39.4847 13.7132 39.6059 12.9881C39.7511 12.2773 39.8575 11.5591 39.9246 10.8367C40.0321 10.0981 40.0588 9.35 40.0043 8.60562C40.0175 7.88757 39.9909 7.16933 39.9246 6.45422Z" fill="#F28555" />
+                <path d="M25.0244 5.0996C25.0405 5.44685 25.0138 5.79477 24.9447 6.13546C24.875 6.49094 24.7681 6.83813 24.626 7.17131L24.1479 8.04781L23.5104 8.84462L22.7136 9.48207L21.7574 9.96016L20.8013 10.2789H18.7295L17.6937 9.96016L16.8172 9.48207L16.0204 8.84462L15.3033 8.04781L14.8252 7.17131L14.5064 6.13546C14.5064 5.81673 14.4268 5.49801 14.4268 5.0996C14.4268 4.7012 14.5064 4.46215 14.5064 4.14343C14.5064 3.8247 14.7455 3.42629 14.8252 3.10757L15.3033 2.23108L16.0204 1.43426C16.249 1.17933 16.5183 0.963939 16.8172 0.796813L17.6937 0.318725L18.7295 0H20.8013L21.7574 0.318725L22.7136 0.796813L23.5104 1.43426L24.1479 2.23108L24.626 3.10757C24.7789 3.43673 24.8861 3.78523 24.9447 4.14343C25.0105 4.45766 25.0372 4.77881 25.0244 5.0996Z" fill="#EB662B" />
+            </svg>
+        </div>
+        <div class="mt-4 text-2xl font-semibold text-dark-1">Viatours</div>
+    </div>
+
+    <!-- Mobile Menu Drawer -->
+    <div id="mobile-menu" class="fixed inset-0 z-50 transform -translate-x-full transition-transform duration-300 ease-in-out lg:hidden">
+        <div class="absolute inset-0 bg-black/50" onclick="toggleMobileMenu()"></div>
+        <div class="relative w-[300px] h-full bg-white shadow-xl flex flex-col p-6 overflow-y-auto">
+            <div class="flex justify-between items-center mb-8">
+                <div class="text-2xl font-bold">Main Menu</div>
+                <button onclick="toggleMobileMenu()" class="p-2 bg-light-1 rounded-full w-10 h-10 flex items-center justify-center hover:bg-accent-1 hover:text-white transition">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
                 </button>
             </div>
-            
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <div class="bg-white rounded-lg shadow p-6">
-                    <h3 class="text-xl font-semibold mb-2 text-gray-800">Feature One</h3>
-                    <p class="text-gray-600">Beautiful and responsive design out of the box.</p>
+            <nav class="space-y-4">
+                <div class="border-b border-light-2 pb-2">
+                    <button class="flex justify-between items-center w-full text-lg font-medium" onclick="toggleSubmenu(this)">Home <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg></button>
+                    <div class="hidden pl-4 mt-2 space-y-2 text-text-light">
+                        <a href="#" class="block py-1">Home 01</a>
+                        <a href="#" class="block py-1">Home 02</a>
+                        <a href="#" class="block py-1">Home 03</a>
+                    </div>
                 </div>
-                <div class="bg-white rounded-lg shadow p-6">
-                    <h3 class="text-xl font-semibold mb-2 text-gray-800">Feature Two</h3>
-                    <p class="text-gray-600">Utility-first approach for rapid development.</p>
+                <div class="border-b border-light-2 pb-2">
+                    <button class="flex justify-between items-center w-full text-lg font-medium" onclick="toggleSubmenu(this)">Tour <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg></button>
+                    <div class="hidden pl-4 mt-2 space-y-2 text-text-light">
+                        <a href="#" class="block py-1">Tour List 1</a>
+                        <a href="#" class="block py-1">Tour List 2</a>
+                    </div>
                 </div>
-                <div class="bg-white rounded-lg shadow p-6">
-                    <h3 class="text-xl font-semibold mb-2 text-gray-800">Feature Three</h3>
-                    <p class="text-gray-600">Fully customizable and easy to maintain.</p>
+                <a href="#" class="block text-lg font-medium border-b border-light-2 pb-2">Destinations</a>
+                <a href="#" class="block text-lg font-medium border-b border-light-2 pb-2">Blog</a>
+                <a href="#" class="block text-lg font-medium">Contact</a>
+            </nav>
+            <div class="mt-auto">
+                <div class="text-text-light mb-2">Speak to our expert at</div>
+                <div class="text-accent-1 text-xl font-medium mb-6">1-800-453-6744</div>
+                <div class="flex space-x-4 text-dark-1">
+                    <a href="#" class="hover:text-accent-1 transition"><svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg></a>
+                    <a href="#" class="hover:text-accent-1 transition"><svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z"/></svg></a>
+                    <a href="#" class="hover:text-accent-1 transition"><svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0C8.74 0 8.333.015 7.053.072 5.775.132 4.905.333 4.14.63c-.789.306-1.459.717-2.126 1.384S.935 3.35.63 4.14C.333 4.905.131 5.775.072 7.053.012 8.333 0 8.74 0 12s.015 3.667.072 4.947c.06 1.277.261 2.148.558 2.913.306.788.717 1.459 1.384 2.126.667.666 1.336 1.079 2.126 1.384.766.296 1.636.499 2.913.558C8.333 23.988 8.74 24 12 24s3.667-.015 4.947-.072c1.277-.06 2.148-.262 2.913-.558.788-.306 1.459-.718 2.126-1.384.666-.667 1.079-1.335 1.384-2.126.296-.765.499-1.636.558-2.913.06-1.28.072-1.687.072-4.947s-.015-3.667-.072-4.947c-.06-1.277-.262-2.149-.558-2.913-.306-.789-.718-1.459-1.384-2.126C21.315 1.347 20.646.935 19.856.63c-.765-.297-1.636-.499-2.913-.558C15.667.012 15.26 0 12 0zm0 2.16c3.203 0 3.585.016 4.85.071 1.17.055 1.805.249 2.227.415.562.217.96.477 1.382.896.419.42.679.819.896 1.381.164.422.36 1.057.413 2.227.057 1.266.07 1.646.07 4.85s-.015 3.585-.074 4.85c-.061 1.17-.256 1.805-.421 2.227-.224.562-.479.96-.899 1.382-.419.419-.824.679-1.38.896-.42.164-1.065.36-2.235.413-1.274.057-1.649.07-4.859.07-3.211 0-3.586-.015-4.859-.074-1.171-.061-1.816-.256-2.236-.421-.569-.224-.96-.479-1.379-.899-.421-.419-.69-.824-.9-1.38-.165-.42-.359-1.065-.42-2.235-.045-1.26-.061-1.649-.061-4.844 0-3.196.016-3.586.061-4.861.061-1.17.255-1.814.42-2.234.21-.57.479-.96.9-1.381.419-.419.81-.689 1.379-.898.422-.166 1.051-.361 2.221-.421 1.275-.045 1.65-.06 4.859-.06l.045.03zm0 3.678c-3.405 0-6.162 2.76-6.162 6.162 0 3.405 2.76 6.162 6.162 6.162 3.405 0 6.162-2.76 6.162-6.162 0-3.405-2.76-6.162-6.162-6.162zM12 16c-2.21 0-4-1.79-4-4s1.79-4 4-4 4 1.79 4 4-1.79 4-4 4zm7.846-10.405c0 .795-.646 1.44-1.44 1.44-.795 0-1.44-.646-1.44-1.44 0-.794.646-1.439 1.44-1.439.793-.001 1.44.645 1.44 1.439z"/></svg></a>
                 </div>
             </div>
-        </main>
-        
-        <footer class="text-center mt-8 text-gray-500">
-            <p>&copy; 2025 ViaTour Theme. Powered by Tailwind CSS v4.</p>
-        </footer>
-    </div>
+        </div>
+    </footer>
+
+    <!-- Back to top -->
+    <button id="to-top" onclick="scrollToTop()" class="fixed right-[30px] bottom-[30px] w-[50px] h-[50px] bg-white rounded-full shadow-lg flex items-center justify-center text-dark-1 hover:bg-accent-1 hover:text-white transition opacity-0 invisible z-40">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18"></path></svg>
+    </button>
+
+    <script>
+        // Preloader
+        window.addEventListener('load', () => {
+            const preloader = document.getElementById('preloader');
+            setTimeout(() => {
+                preloader.style.opacity = '0';
+                setTimeout(() => {
+                    preloader.style.display = 'none';
+                }, 500);
+            }, 500);
+        });
+
+        // Header Sticky
+        const header = document.getElementById('main-header');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                header.classList.add('header-sticky');
+                header.classList.remove('bg-transparent');
+            } else {
+                header.classList.remove('header-sticky');
+            }
+        });
+
+        // Mobile Menu
+        const mobileMenu = document.getElementById('mobile-menu');
+        function toggleMobileMenu() {
+            mobileMenu.classList.toggle('-translate-x-full');
+        }
+
+        function toggleSubmenu(btn) {
+            const submenu = btn.nextElementSibling;
+            submenu.classList.toggle('hidden');
+            btn.querySelector('svg').classList.toggle('rotate-180');
+        }
+
+        // Search Dropdowns
+        function toggleSearchDropdown(id) {
+            const dropdowns = ['where', 'when', 'type'];
+            dropdowns.forEach(d => {
+                const el = document.getElementById(`dropdown-${d}`);
+                if (d === id) {
+                    el.classList.toggle('hidden');
+                } else {
+                    el.classList.add('hidden');
+                }
+            });
+        }
+
+        // Close dropdowns when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!e.target.closest('.group') && !e.target.closest('button')) {
+                const dropdowns = ['where', 'when', 'type'];
+                dropdowns.forEach(d => {
+                    const el = document.getElementById(`dropdown-${d}`);
+                    if (el && !el.classList.contains('hidden')) {
+                        el.classList.add('hidden');
+                    }
+                });
+            }
+        });
+
+        // Back to top
+        const toTopBtn = document.getElementById('to-top');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 500) {
+                toTopBtn.classList.remove('opacity-0', 'invisible');
+            } else {
+                toTopBtn.classList.add('opacity-0', 'invisible');
+            }
+        });
+
+        function scrollToTop() {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Simple Slider Implementation
+        function sliderNext() {
+            const track = document.getElementById('trips-scroll-container');
+            const items = document.getElementById('trips-track').children;
+            const itemWidth = items[0].clientWidth;
+            track.scrollBy({ left: itemWidth, behavior: 'smooth' });
+        }
+
+        function sliderPrev() {
+            const track = document.getElementById('trips-scroll-container');
+            const items = document.getElementById('trips-track').children;
+            const itemWidth = items[0].clientWidth;
+            track.scrollBy({ left: -itemWidth, behavior: 'smooth' });
+        }
+    </script>
 </body>
 </html>
